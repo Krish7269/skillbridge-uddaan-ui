@@ -14,7 +14,243 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      community_channels: {
+        Row: {
+          channel_type: string
+          created_at: string | null
+          description: string
+          id: string
+          name: string
+        }
+        Insert: {
+          channel_type: string
+          created_at?: string | null
+          description: string
+          id?: string
+          name: string
+        }
+        Update: {
+          channel_type?: string
+          created_at?: string | null
+          description?: string
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
+      community_members: {
+        Row: {
+          channel_id: string
+          id: string
+          joined_at: string | null
+          user_id: string
+        }
+        Insert: {
+          channel_id: string
+          id?: string
+          joined_at?: string | null
+          user_id: string
+        }
+        Update: {
+          channel_id?: string
+          id?: string
+          joined_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "community_members_channel_id_fkey"
+            columns: ["channel_id"]
+            isOneToOne: false
+            referencedRelation: "community_channels"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      community_messages: {
+        Row: {
+          channel_id: string
+          created_at: string | null
+          id: string
+          message: string
+          user_id: string
+        }
+        Insert: {
+          channel_id: string
+          created_at?: string | null
+          id?: string
+          message: string
+          user_id: string
+        }
+        Update: {
+          channel_id?: string
+          created_at?: string | null
+          id?: string
+          message?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "community_messages_channel_id_fkey"
+            columns: ["channel_id"]
+            isOneToOne: false
+            referencedRelation: "community_channels"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      course_tasks: {
+        Row: {
+          content: string
+          course_id: string
+          created_at: string | null
+          documentation: string | null
+          id: string
+          task_number: number
+          title: string
+        }
+        Insert: {
+          content: string
+          course_id: string
+          created_at?: string | null
+          documentation?: string | null
+          id?: string
+          task_number: number
+          title: string
+        }
+        Update: {
+          content?: string
+          course_id?: string
+          created_at?: string | null
+          documentation?: string | null
+          id?: string
+          task_number?: number
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "course_tasks_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "courses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      courses: {
+        Row: {
+          category: string
+          created_at: string | null
+          description: string
+          difficulty: string
+          duration: string
+          id: string
+          language: string
+          thumbnail_url: string | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          category: string
+          created_at?: string | null
+          description: string
+          difficulty: string
+          duration: string
+          id?: string
+          language: string
+          thumbnail_url?: string | null
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          category?: string
+          created_at?: string | null
+          description?: string
+          difficulty?: string
+          duration?: string
+          id?: string
+          language?: string
+          thumbnail_url?: string | null
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      mentors: {
+        Row: {
+          created_at: string | null
+          id: string
+          learner_id: string
+          mentor_email: string
+          mentor_name: string
+          mentor_phone: string | null
+          relationship: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          learner_id: string
+          mentor_email: string
+          mentor_name: string
+          mentor_phone?: string | null
+          relationship: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          learner_id?: string
+          mentor_email?: string
+          mentor_name?: string
+          mentor_phone?: string | null
+          relationship?: string
+        }
+        Relationships: []
+      }
+      user_course_progress: {
+        Row: {
+          completed: boolean | null
+          completed_at: string | null
+          course_id: string
+          created_at: string | null
+          id: string
+          task_id: string
+          user_id: string
+        }
+        Insert: {
+          completed?: boolean | null
+          completed_at?: string | null
+          course_id: string
+          created_at?: string | null
+          id?: string
+          task_id: string
+          user_id: string
+        }
+        Update: {
+          completed?: boolean | null
+          completed_at?: string | null
+          course_id?: string
+          created_at?: string | null
+          id?: string
+          task_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_course_progress_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "courses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_course_progress_task_id_fkey"
+            columns: ["task_id"]
+            isOneToOne: false
+            referencedRelation: "course_tasks"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never

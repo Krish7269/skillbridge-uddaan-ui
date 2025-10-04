@@ -175,7 +175,7 @@ export default function CoursesPage() {
               )}
 
               <Button asChild className="w-full">
-                <Link to={`/courses/${course.id}`}>
+                <Link to={`/course/${course.id}`}>
                   {course.progress > 0 ? t('courses.resume') : t('courses.start')}
                 </Link>
               </Button>
